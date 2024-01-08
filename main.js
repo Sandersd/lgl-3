@@ -144,9 +144,9 @@ class CreateParticles {
 		document.addEventListener( 'mousemove', this.onMouseMove.bind( this ));
 		document.addEventListener( 'mouseup', this.onMouseUp.bind( this ));
 
-    document.addEventListener('touchstart', this.onTouchStart.bind(this));
-    document.addEventListener('touchmove', this.onTouchMove.bind(this));
-    document.addEventListener('touchend', this.onTouchEnd.bind(this));
+    // document.addEventListener('touchstart', this.onTouchStart.bind(this));
+    // document.addEventListener('touchmove', this.onTouchMove.bind(this));
+    // document.addEventListener('touchend', this.onTouchEnd.bind(this));
 		
 	}
 
