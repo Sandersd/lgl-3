@@ -3,13 +3,10 @@ html, body {
   
   margin: 0;
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   font-family: 'Roboto' !important; 
   color: white;
   font-size: 9px;
-}
-
-body, html {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -18,6 +15,9 @@ body, html {
   user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Firefox */
   touch-action: none; /* Disable certain touch actions for better touch response */
 }
+body {
+  background-color: black;
+}
 
 img {
   pointer-events: none; /* Prevent dragging images */
@@ -25,13 +25,17 @@ img {
 
 #magic {
 
-  position: fixed;
+  position: relative;
   width: 100%;
   height: 100vh;
   display: block;
   top: 0;
   left: 0;
   z-index: -9999;
+}
+
+section {
+  height: 100vh;
 }
 
 .playground{
