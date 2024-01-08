@@ -127,6 +127,10 @@ class CreateParticles {
 		document.addEventListener( 'mousedown', this.onMouseDown.bind( this ));
 		document.addEventListener( 'mousemove', this.onMouseMove.bind( this ));
 		document.addEventListener( 'mouseup', this.onMouseUp.bind( this ));
+
+    document.addEventListener('touchstart', this.onTouchStart.bind(this));
+    document.addEventListener('touchmove', this.onTouchMove.bind(this));
+    document.addEventListener('touchend', this.onTouchEnd.bind(this));
 		
 	}
 
@@ -159,6 +163,26 @@ class CreateParticles {
 	    this.mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	}
+
+  onTouchStart(event) {
+    if (event.touches.length > 0) {
+      this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+      this.mouse.y = - (event.touches[0].clientY / window.innerHeight) * 2 + 1;
+      this.onMouseDown(); // Call the same logic as onMouseDown
+    }
+  }
+  
+  onTouchMove(event) {
+    if (event.touches.length > 0) {
+      this.mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+      this.mouse.y = - (event.touches[0].clientY / window.innerHeight) * 2 + 1;
+      this.onMouseMove(); // Call the same logic as onMouseMove
+    }
+  }
+  
+  onTouchEnd(event) {
+    this.onMouseUp(); // Call the same logic as onMouseUp
+  }
 
 	render( level ){ 
 
