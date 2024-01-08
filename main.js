@@ -115,7 +115,7 @@ class CreateParticles {
 	setup(){
 
 		const geometry = new THREE.PlaneGeometry( this.visibleWidthAtZDepth( 100, this.camera ), this.visibleHeightAtZDepth( 100, this.camera ));
-		const material = new THREE.MeshBasicMaterial( { color: 0x00ff00, transparent: false } );
+		const material = new THREE.MeshBasicMaterial( { color: 0xD45D8A, transparent: false } );
 		this.planeArea = new THREE.Mesh( geometry, material );
 		this.planeArea.visible = true;
 		this.createText();
@@ -241,7 +241,7 @@ class CreateParticles {
 
 		    		if ((px > (initX + 70)) || ( px < (initX - 70)) || (py > (initY + 70) || ( py < (initY - 70)))){
 
-		    			this.colorChange.setHSL( .15, 1.0 , .5 )
+		    			this.colorChange.setHSL( .78, 1.0 , .5 )
 		    			coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
 		    			coulors.needsUpdate = true;
 
@@ -257,7 +257,7 @@ class CreateParticles {
 			    			px -= .03 * Math.cos( t );
 			    			py -= .03 * Math.sin( t );
 
-			    			this.colorChange.setHSL( .15 , 1.0 , .5 )
+			    			this.colorChange.setHSL( .78 , 1.0 , .5 )
 			    			coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
 			    			coulors.needsUpdate = true;
 
@@ -279,7 +279,7 @@ class CreateParticles {
 
 			    		if ((px > (initX + 10)) || ( px < (initX - 10)) || (py > (initY + 10) || ( py < (initY - 10)))){
 
-			    			this.colorChange.setHSL( .15, 1.0 , .5 )
+			    			this.colorChange.setHSL( .78, 1.0 , .5 )
 			    			coulors.setXYZ( i, this.colorChange.r, this.colorChange.g, this.colorChange.b )
 			    			coulors.needsUpdate = true;
 
