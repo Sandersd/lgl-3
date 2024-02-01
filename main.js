@@ -189,7 +189,7 @@ window.addEventListener('load', () => {
   
   gsap.registerPlugin(ScrollTrigger);
 
-  // Create a timeline
+  // Create a timeline for preload
   const tl = gsap.timeline({ 
     onComplete: () => {
       preloader.style.width = '0';
@@ -213,14 +213,24 @@ window.addEventListener('load', () => {
     ease: "bounce.out"
   });
 
-  // Create a timeline for each piece with its unique color journey
+  // Create a timeline for each letter piece with its unique color journey
   letterPieces.forEach((piece, index) => {
     const toneFrequency = tones[index % tones.length];
     const tl = createColorCycleTimeline(piece, index * 0.1);
     onHoverOrTouch(piece, toneFrequency, tl);
   });
 
-
+  // EMOJI
+  var options = {
+    invertX: false,
+    invertY: false,
+    limitX: 40,
+    limitY: 40
+  }
+  
+  var emoji = document.getElementById('emoji');
+  var parallax = new Parallax(emoji, options);
+  
   //Scroll and other anims
   gsap.to('.playground', {
     scrollTrigger: {
