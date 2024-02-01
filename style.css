@@ -55,11 +55,12 @@ section {
   /* min-height: 100vh; */
 }
 section.last-section {
+  min-height: 100vh;
   height: 100vh;
 }
 .last-section h3.sub-title {
   position: absolute;
-  top: 10%;
+  top: 100px;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -71,9 +72,32 @@ section.last-section {
 }
 .last-section p {
   position: absolute;
-  bottom: 20%;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
+}
+
+/* MAGNETS */
+li.magnet{
+  display: inline-block;
+  list-style-type: none;
+  margin: 0 20px;
+  &:nth-child(1) button {
+    background: lightgrey;
+  }
+}
+.magnet button {
+  position: relative;
+  background: rebeccapurple;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border:5px solid white;
+  color: white;
+  font-weight: bold;
+  font-size: 50px;
+  cursor: pointer;
+  padding: 0;
 }
 
 .playground{

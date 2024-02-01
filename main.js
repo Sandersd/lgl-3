@@ -474,7 +474,7 @@ window.addEventListener('load', () => {
     }
     
     calculatePosition() {
-      TweenMax.set(this.el, {
+      gsap.set(this.el, {
         x: 0,
         y: 0,
         scale: 1
@@ -487,53 +487,50 @@ window.addEventListener('load', () => {
     }
     
     onMouseMove(e) {
+      this.calculatePosition();
       let hover = false;
       let hoverArea = (this.hover ? 0.7 : 0.5);
       let x = e.clientX - this.x;
       let y = e.clientY - this.y;
-      let distance = Math.sqrt( x*x + y*y );
+      let distance = Math.sqrt(x * x + y * y);
       if (distance < (this.width * hoverArea)) {
-         hover = true;
-          if (!this.hover) {
-            this.hover = true;
-          }
-          this.onHover(e.clientX, e.clientY);
+        hover = true;
+        if (!this.hover) {
+          this.hover = true;
+        }
+        this.onHover(e.clientX, e.clientY);
       }
       
-      if(!hover && this.hover) {
+      if (!hover && this.hover) {
         this.onLeave();
         this.hover = false;
       }
     }
     
     onHover(x, y) {
-      TweenMax.to(this.el, 0.4, {
+      gsap.to(this.el, {
+        duration: 0.4,
         x: (x - this.x) * 0.4,
         y: (y - this.y) * 0.4,
         scale: 1.15,
-        ease: Power2.easeOut
+        ease: "power2.out",
+        zIndex: 10
       });
-      this.el.style.zIndex = 10;
     }
     onLeave() {
-      TweenMax.to(this.el, 0.7, {
+      gsap.to(this.el, {
+        duration: 0.7,
         x: 0,
         y: 0,
         scale: 1,
-        ease: Elastic.easeOut.config(1.2, 0.4)
+        ease: "elastic.out(1.2, 0.4)",
+        zIndex: 10
       });
-      this.el.style.zIndex = 1;
     }
   }
-  
+
   const btn1 = document.querySelector('li:nth-child(1) button');
   new HoverButton(btn1);
-  
-  const btn2 = document.querySelector('li:nth-child(2) button');
-  new HoverButton(btn2);
-  
-  const btn3 = document.querySelector('li:nth-child(3) button');
-  new HoverButton(btn3);
 });
 
 
