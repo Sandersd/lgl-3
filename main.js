@@ -187,8 +187,8 @@ window.addEventListener('load', () => {
       e.preventDefault();
     }, { passive: false });
   }
-  // InertiaPlugin
-  gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin);
+
+  gsap.registerPlugin(ScrollTrigger, InertiaPlugin, Draggable, MorphSVGPlugin);
 
   // Create a timeline for preload
   const tl = gsap.timeline({ 
@@ -220,6 +220,39 @@ window.addEventListener('load', () => {
     const tl = createColorCycleTimeline(piece, index * 0.1);
     onHoverOrTouch(piece, toneFrequency, tl);
   });
+
+  //Scroll and other anims
+  // gsap.to('.playground', {
+  //   scrollTrigger: {
+  //     trigger: '.playground',
+  //     start: '10% 10%',
+  //     end: 'bottom 60%',
+  //     // markers: {
+  //     //   startColor: "purple",
+  //     //   endColor: "fuchsia",
+  //     //   fontSize: "3rem",
+  //     // },
+  //     scrub: true
+  //   },
+  //   opacity: 0,
+  //   display: 'none',
+  //   ease: 'none',
+  //   duration: .5
+  // });
+
+  // const rotateTimeline = gsap.timeline({repeat: -1, yoyo: true});
+  // rotateTimeline.to('.rotating-element', { rotation: 360, duration: 10, ease: 'linear' });
+
+  // gsap.to('.fade-out-section', {
+  //   scrollTrigger: {
+  //     trigger: '.fade-out-section',
+  //     start: 'top center', // Start when the top of the element hits the center of the viewport
+  //     end: 'bottom top', // End when the bottom of the element leaves the top of the viewport
+  //     toggleActions: 'play none none reverse', // Animation plays on scroll down and reverses on scroll up
+  //   },
+  //   opacity: 0,
+  //   duration: 1,
+  // });
 
   // EMOJI
   var options = {
@@ -382,38 +415,125 @@ window.addEventListener('load', () => {
     window.addEventListener("mousemove", updateTranslation);
   }
 
-  //Scroll and other anims
-  gsap.to('.playground', {
-    scrollTrigger: {
-      trigger: '.playground',
-      start: '10% 10%',
-      end: 'bottom 60%',
-      // markers: {
-      //   startColor: "purple",
-      //   endColor: "fuchsia",
-      //   fontSize: "3rem",
-      // },
-      scrub: true
+  // CAROUSEL
+  var cards = gsap.utils.toArray(".work-card"),
+    dragDistancePerRotation = 3000,
+    radius = 520,
+    proxy = document.createElement("div"), // just a dummy element that'll get dragged, but we don't care about it.
+    progressWrap = gsap.utils.wrap(0, 1),
+    spin = gsap.fromTo(cards, {
+      rotationY: i => i * 360 / cards.length
+    }, {
+      rotationY: "-=360",
+      duration: 20,
+      ease: "none",
+      repeat: -1,
+      transformOrigin: "50% 50% " + -radius + "px"
+    }),
+    startProgress;
+
+  Draggable.create(proxy, {
+    trigger: ".work-container", // activate the dragging when the user presses on the .demoWrapper
+    type: "x", // we only care about movement on the x-axis.
+    inertia: true,
+    allowNativeTouchScrolling: true,
+    onPress() {
+      gsap.killTweensOf(spin); // if it's in the middle of animating the spin back to timeScale: 1, kill that.
+      spin.timeScale(0); // stop the spin.
+      startProgress = spin.progress(); // remember the current progress value because we'll make the drag relative to that.
     },
-    opacity: 0,
-    display: 'none',
-    ease: 'none',
-    duration: .5
+    onDrag: updateRotation,
+    onThrowUpdate: updateRotation,
+    onRelease() {
+      if (!this.tween || !this.tween.isActive()) { // if the user clicked and released (no inertia flick), resume the spin
+        gsap.to(spin, {timeScale: 1, duration: 1});
+      }
+    },
+    onThrowComplete() { // resume the spin after the inertia tween finishes
+      gsap.to(spin, {timeScale: 1, duration: 1});
+    }
   });
 
-  const rotateTimeline = gsap.timeline({repeat: -1, yoyo: true});
-  rotateTimeline.to('.rotating-element', { rotation: 360, duration: 10, ease: 'linear' });
+  function updateRotation() {
+    let p = startProgress + (this.startX - this.x) / dragDistancePerRotation;
+    spin.progress(progressWrap(p));
+  }
 
-  // gsap.to('.fade-out-section', {
-  //   scrollTrigger: {
-  //     trigger: '.fade-out-section',
-  //     start: 'top center', // Start when the top of the element hits the center of the viewport
-  //     end: 'bottom top', // End when the bottom of the element leaves the top of the viewport
-  //     toggleActions: 'play none none reverse', // Animation plays on scroll down and reverses on scroll up
-  //   },
-  //   opacity: 0,
-  //   duration: 1,
-  // });
+  // MAGNETS
+  class HoverButton {
+    constructor(el) {
+      this.el = el;
+      this.hover = false;
+      this.calculatePosition();
+      this.attachEventsListener();
+    }
+    
+    attachEventsListener() {
+      window.addEventListener('mousemove', e => this.onMouseMove(e));
+      window.addEventListener('resize', e => this.calculatePosition(e));
+    }
+    
+    calculatePosition() {
+      TweenMax.set(this.el, {
+        x: 0,
+        y: 0,
+        scale: 1
+      });
+      const box = this.el.getBoundingClientRect();
+      this.x = box.left + (box.width * 0.5);
+      this.y = box.top + (box.height * 0.5);
+      this.width = box.width;
+      this.height = box.height;
+    }
+    
+    onMouseMove(e) {
+      let hover = false;
+      let hoverArea = (this.hover ? 0.7 : 0.5);
+      let x = e.clientX - this.x;
+      let y = e.clientY - this.y;
+      let distance = Math.sqrt( x*x + y*y );
+      if (distance < (this.width * hoverArea)) {
+         hover = true;
+          if (!this.hover) {
+            this.hover = true;
+          }
+          this.onHover(e.clientX, e.clientY);
+      }
+      
+      if(!hover && this.hover) {
+        this.onLeave();
+        this.hover = false;
+      }
+    }
+    
+    onHover(x, y) {
+      TweenMax.to(this.el, 0.4, {
+        x: (x - this.x) * 0.4,
+        y: (y - this.y) * 0.4,
+        scale: 1.15,
+        ease: Power2.easeOut
+      });
+      this.el.style.zIndex = 10;
+    }
+    onLeave() {
+      TweenMax.to(this.el, 0.7, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        ease: Elastic.easeOut.config(1.2, 0.4)
+      });
+      this.el.style.zIndex = 1;
+    }
+  }
+  
+  const btn1 = document.querySelector('li:nth-child(1) button');
+  new HoverButton(btn1);
+  
+  const btn2 = document.querySelector('li:nth-child(2) button');
+  new HoverButton(btn2);
+  
+  const btn3 = document.querySelector('li:nth-child(3) button');
+  new HoverButton(btn3);
 });
 
 
