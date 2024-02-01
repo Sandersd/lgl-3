@@ -165,6 +165,10 @@ window.addEventListener('load', () => {
   const mainContent = document.querySelector('.main-content');
   const logoLoader = document.querySelector('.logo-loader');
   const letterPieces = document.querySelectorAll('.letter-piece');
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
   
   gsap.registerPlugin(ScrollTrigger);
 
