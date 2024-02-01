@@ -2,6 +2,7 @@ import './style.css'
 import gsap from 'gsap';
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
+// NEON BOTTOM SECTION
 neonCursor({
   el: document.getElementById('app'),
   shaderPoints: 16,
@@ -16,6 +17,7 @@ neonCursor({
   sleepTimeCoefY: 0.0025
 })
 
+//SMOOTH SCROLL
 const lenis = new Lenis()
 
 function raf(time) {
@@ -25,6 +27,173 @@ function raf(time) {
 
 requestAnimationFrame(raf)
 
+//MUSIC
+let audioContext;
+let isAudioEnabled = false;
+
+const initAudioContext = () => {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioContext.state === 'suspended') {
+    audioContext.resume();
+  }
+  isAudioEnabled = true;
+  updateAudioIcon();
+};
+
+//C Major
+const tones = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+//D Major
+// const tones = [293.66, 329.63, 369.99, 392.00, 440.00, 493.88, 554.37, 587.33];
+//F Major
+// const tones = [349.23, 392.00, 440.00, 466.16, 523.25, 587.33, 659.25, 698.46];
+
+//E Minor
+// const tones = [329.63, 369.99, 392.00, 440.00, 493.88, 523.25, 587.33, 659.25];
+//A Minor
+// const tones = [440.00, 493.88, 523.25, 587.33, 659.25, 698.46, 783.99, 880.00];
+//Bb Major
+// const tones = [466.16, 523.25, 587.33, 622.25, 698.46, 783.99, 880.00, 932.33];
+//Petatonic
+// const tones = [261.63, 293.66, 329.63, 392.00, 440.00, 523.25];
+//Blues
+// const tones = [440.00, 523.25, 587.33, 622.25, 659.25, 783.99, 880.00];
+//G Major
+// const tones = [392.00, 440.00, 493.88, 523.25, 587.33, 659.25, 739.99, 783.99];
+
+const playTone = (frequency) => {
+  if (!audioContext || !isAudioEnabled) return;
+
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+
+  oscillator.type = 'sine';
+  oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  gainNode.gain.value = 0.1;
+
+  oscillator.start();
+
+  // Smooth fade-out
+  gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Start at full volume
+  gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.5); // Fade to almost zero in 0.5 seconds
+
+  oscillator.stop(audioContext.currentTime + 0.5); // Stop the oscillator after 0.5 seconds
+};
+
+const updateAudioIcon = () => {
+  const audioIcon = document.getElementById('audioControl');
+  audioIcon.textContent = isAudioEnabled ? '🔊' : '🔇';
+};
+
+const audioIcon = document.getElementById('audioControl');
+const preloader = document.querySelector('#preloader');
+
+preloader.addEventListener('click', initAudioContext);
+preloader.addEventListener('touchstart', initAudioContext);
+audioIcon.addEventListener('click', initAudioContext);
+audioIcon.addEventListener('touchstart', initAudioContext);
+
+const onHoverOrTouch = (element, frequency, timeline) => {
+  element.addEventListener('mouseover', () => {
+    playTone(frequency);
+    timeline.pause();
+    gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // Replace 'hoverColor' with your desired color
+  });
+  element.addEventListener('click', () => {
+    playTone(getRandomTone());
+    timeline.pause();
+    gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // Replace 'hoverColor' with your desired color
+  });
+  element.addEventListener('mouseout', () => {
+    timeline.resume(); // Resume the timeline animation
+  });
+  element.addEventListener('touchstart', () => {
+    playTone(getRandomTone());
+    timeline.pause();
+    gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // For touch devices
+  });
+  element.addEventListener('touchend', () => {
+    timeline.resume(); // Resume the timeline animation
+  });
+};
+
+//PRELOAD ANIMATIONS
+const colors = ["#FF5733", "#B5179E", "aqua", "#4CC9F0", "#4895EF", "#F72585", "#4361EE", "#480CA8", "#33FF57", "#3357FF", "#F333FF", "#FF3357", "#96246A", "#67006E", "#FA6455", "#F7D8BB", "#C33E7D"];
+const getRandomColor = () => colors[Math.floor(Math.random() * colors.length)];
+const getRandomTone = () => tones[Math.floor(Math.random() * tones.length)];
+
+const shuffleColors = (colorsArray) => {
+  let array = [...colorsArray];
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+};
+
+const createColorCycleTimeline = (element, delay) => {
+  // Shuffle colors for each element
+  const shuffledColors = shuffleColors(colors);
+
+  // Create a timeline for this element
+  const tl = gsap.timeline({ repeat: -1, yoyo: true, delay: delay });
+
+  // Cycle through the shuffled colors
+  shuffledColors.forEach(color => {
+    tl.to(element, {
+      backgroundColor: color,
+      duration: 1.5,
+      ease: "sine.inOut"
+    });
+  });
+
+  return tl;
+};
+
+window.addEventListener('load', () => {
+  const preloader = document.getElementById('preloader');
+  const mainContent = document.querySelector('.main-content');
+  const logoLoader = document.querySelector('.logo-loader');
+  const letterPieces = document.querySelectorAll('.letter-piece');
+
+  // Create a timeline
+  const tl = gsap.timeline({ 
+    onComplete: () => {
+      // preloader.style.display = 'none';
+
+      // Reveal the main content
+      gsap.to(mainContent, {
+        visibility: 'visible',
+        opacity: 1,
+        duration: 0.5
+      });
+    }
+  });
+
+  // Animate the logoLoader's position
+  tl.to(logoLoader, {
+    top: '0%',
+    left: '0%',
+    transform: 'translate(0, 0)',
+    duration: 1.15,
+    ease: "bounce.out"
+  });
+
+
+
+  // Create a timeline for each piece with its unique color journey
+  letterPieces.forEach((piece, index) => {
+    const toneFrequency = tones[index % tones.length];
+    const tl = createColorCycleTimeline(piece, index * 0.1);
+    onHoverOrTouch(piece, toneFrequency, tl);
+  });
+});
 
 
 const preload = () => {
