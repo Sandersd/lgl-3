@@ -1,5 +1,6 @@
 import './style.css'
-import gsap from 'gsap';
+import { gsap } from 'gsap';
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
 // NEON BOTTOM SECTION
@@ -186,8 +187,8 @@ window.addEventListener('load', () => {
       e.preventDefault();
     }, { passive: false });
   }
-  
-  gsap.registerPlugin(ScrollTrigger);
+  // InertiaPlugin
+  gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin);
 
   // Create a timeline for preload
   const tl = gsap.timeline({ 
@@ -230,7 +231,7 @@ window.addEventListener('load', () => {
   
   var emoji = document.getElementById('emoji');
   var parallax = new Parallax(emoji, options);
-  
+
   //Scroll and other anims
   gsap.to('.playground', {
     scrollTrigger: {

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@studio-freight/lenis": "^1.0.33",
-    "gsap": "^3.12.4",
+    "gsap": "npm:@gsap/shockingly@^3.12.5",
     "scrolltrigger": "^1.0.1",
     "split-type": "^0.3.4",
     "three": "^0.160.0"

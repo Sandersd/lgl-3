@@ -283,6 +283,9 @@ p {
   bottom: -150px 
 }
 
+/* EYE */
+
+
 /* EMOJI */
 .emoji-container {
   display: flex;
@@ -336,7 +339,7 @@ p {
   opacity: 0.8;
 }
 
-.eye {
+.eye-e {
   width: 24px;
   height: 38px;
   background-color: #A1620F;
@@ -345,7 +348,7 @@ p {
   -webkit-animation: blink 5s infinite;
           animation: blink 5s infinite;
 }
-.eye.left {
+.eye-e.left {
   position: absolute;
   top: 0;
   right: 70px;
@@ -353,7 +356,7 @@ p {
   left: 0;
   margin: auto;
 }
-.eye.right {
+.eye-e.right {
   position: absolute;
   top: 0;
   right: 0;
