@@ -1,5 +1,6 @@
 import './style.css'
 import gsap from 'gsap';
+import ScrollTrigger from 'gsap/scrolltrigger';
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
 // NEON BOTTOM SECTION
@@ -92,10 +93,13 @@ const updateAudioIcon = () => {
 };
 
 const audioIcon = document.getElementById('audioControl');
-const preloader = document.querySelector('#preloader');
+const mainContent = document.querySelector('.main-content');
+const logoLoader = document.querySelector('.logo-loader');
 
-preloader.addEventListener('click', initAudioContext);
-preloader.addEventListener('touchstart', initAudioContext);
+mainContent.addEventListener('click', initAudioContext);
+mainContent.addEventListener('touchstart', initAudioContext);
+logoLoader.addEventListener('click', initAudioContext);
+logoLoader.addEventListener('touchstart', initAudioContext);
 audioIcon.addEventListener('click', initAudioContext);
 audioIcon.addEventListener('touchstart', initAudioContext);
 
@@ -161,17 +165,20 @@ window.addEventListener('load', () => {
   const mainContent = document.querySelector('.main-content');
   const logoLoader = document.querySelector('.logo-loader');
   const letterPieces = document.querySelectorAll('.letter-piece');
+  
+  gsap.registerPlugin(ScrollTrigger);
 
   // Create a timeline
   const tl = gsap.timeline({ 
     onComplete: () => {
-      // preloader.style.display = 'none';
+      preloader.style.width = '0';
 
       // Reveal the main content
       gsap.to(mainContent, {
         visibility: 'visible',
         opacity: 1,
-        duration: 0.5
+        duration: 0.5,
+        ease: 'sine.in'
       });
     }
   });
@@ -185,13 +192,24 @@ window.addEventListener('load', () => {
     ease: "bounce.out"
   });
 
-
-
   // Create a timeline for each piece with its unique color journey
   letterPieces.forEach((piece, index) => {
     const toneFrequency = tones[index % tones.length];
     const tl = createColorCycleTimeline(piece, index * 0.1);
     onHoverOrTouch(piece, toneFrequency, tl);
+  });
+
+  gsap.to('.playground', {
+    scrollTrigger: {
+      trigger: '.playground',
+      start: 'top 10%',
+      end: 'bottom center',
+      scrub: true
+    },
+    opacity: 0,
+    display: 'none',
+    ease: 'none',
+    duration: .5
   });
 });
 
