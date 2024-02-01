@@ -121,6 +121,11 @@ const onHoverOrTouch = (element, frequency, timeline) => {
     timeline.pause();
     gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // For touch devices
   });
+  element.addEventListener('touchmove', () => {
+    playTone(frequency);
+    timeline.pause();
+    gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // Replace 'hoverColor' with your desired color
+  });
   element.addEventListener('touchend', () => {
     timeline.resume(); // Resume the timeline animation
   });
