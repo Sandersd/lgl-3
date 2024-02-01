@@ -232,6 +232,156 @@ window.addEventListener('load', () => {
   var emoji = document.getElementById('emoji');
   var parallax = new Parallax(emoji, options);
 
+  // EYE
+  const eyeCont = document.querySelector(".eye-container");
+  const eye = document.querySelector(".eye");
+  const q = gsap.utils.selector(eye);
+
+  const tlEye = gsap.timeline();
+  tlEye.timeScale(0.95);
+
+  tlEye
+    .to(q(".lashes--bottom"), {
+      morphSVG:
+        "M402.15,537.7a3,3,0,0,1-3-3h0a3,3,0,0,1,6,0h0A3,3,0,0,1,402.15,537.7Zm-79.49-18.21h0a3,3,0,0,0-5.54-2.3h0a3,3,0,0,0,1.62,3.92,3.1,3.1,0,0,0,1.15.23A3,3,0,0,0,322.66,519.49Zm-70.39-45.63h0a3,3,0,0,0-4.24-4.24h0a3,3,0,0,0,2.12,5.12A3,3,0,0,0,252.27,473.86Zm233.29,47.25a3,3,0,0,0,1.62-3.92h0a3,3,0,1,0-5.54,2.3h0a3,3,0,0,0,2.77,1.85A3.14,3.14,0,0,0,485.56,521.11Zm70.7-47.25a3,3,0,0,0,0-4.24h0a3,3,0,0,0-4.24,4.24h0a3,3,0,0,0,2.12.88A3,3,0,0,0,556.26,473.86Z",
+      duration: 0.3,
+      ease: "expo.inOut"
+    })
+    .to(
+      q(".lashes--bottom"),
+      {
+        opacity: 0,
+        duration: 0.1
+      },
+      ">-.1"
+    )
+    .to(
+      q(".eye__lid"),
+      {
+        morphSVG:
+          "M571.61,399.31s-77-90.1-172-90.1-172,90.1-172,90.1,77-91.31,172-91.31S571.61,399.31,571.61,399.31Z",
+        duration: 0.8,
+        ease: "expo.inOut"
+      },
+      "<-.3"
+    )
+    .to(
+      q(".lashes--top"),
+      {
+        opacity: 1,
+        duration: 0.1
+      },
+      ">-.4"
+    )
+    .from(
+      q(".lashes--top"),
+      {
+        morphSVG:
+          "M402.15,265.78a3,3,0,0,1-3-3h0a3,3,0,0,1,6,0h0A3,3,0,0,1,402.15,265.78Zm85,14.51h0a3,3,0,1,0-5.54-2.3h0a3,3,0,0,0,1.62,3.92,2.88,2.88,0,0,0,1.15.23A3,3,0,0,0,487.18,280.29Zm69.08,47.57h0a3,3,0,0,0-4.24-4.24h0a3,3,0,0,0,2.12,5.12A3,3,0,0,0,556.26,327.86ZM321,281.91a3,3,0,0,0,1.62-3.92h0a3,3,0,1,0-5.54,2.3h0a3,3,0,0,0,2.77,1.85A3,3,0,0,0,321,281.91Zm-68.77,45.95a3,3,0,0,0,0-4.24h0a3,3,0,0,0-4.24,4.24h0a3,3,0,0,0,4.24,0Z",
+        duration: 0.4,
+        ease: "back.out(1.5)"
+        // ease: "expo.inOut"
+      },
+      "<-.1"
+    )
+    .from(
+      q(".eye__inner"),
+      {
+        y: 150,
+        scale: 1.15,
+        duration: 0.75,
+        transformOrigin: "center",
+        ease: "expo.inOut"
+      },
+      "<-.4"
+    )
+    .from(
+      q(".iris, .pupil, .glare"),
+      {
+        scale: 0.25,
+        opacity: 0,
+        duration: 0.6,
+        stagger: 0.15,
+        ease: "elastic.out(.65, 2)",
+        transformOrigin: "center"
+      },
+      "<+.3"
+    );
+
+  // eyeCont.addEventListener("click", handleClick, false);
+  eye.addEventListener("click", handleClick, false);
+
+  createMouseTracking(".pupil", 50);
+  createMouseTracking(".iris", 15);
+  createMouseTracking(".glare", 360);
+
+  // Open/close eye on click
+  function handleClick() {
+    if (tlEye.reversed()) {
+      tlEye.play();
+    } else {
+      tlEye.reverse();
+    }
+  }
+
+  // Setup mouse position tracking for select elements
+  function createMouseTracking(element, maxTranslation = 30) {
+    const el = document.querySelector(element);
+
+    // Create a max distance for the mouse position to the center of the element
+    let maxXDist, maxYDist;
+    let centerX, centerY;
+
+    // Reset parameters based on the window size
+    function resize() {
+      maxXDist = innerWidth / 2;
+      maxYDist = innerHeight / 2;
+
+      // Since SVG transform-origin can be finicky, get the bounding box
+      // 	coordinates for the element to calculate its center
+      const elArea = el.getBoundingClientRect();
+      const radius = elArea.width / 2;
+      centerX = elArea.left + radius;
+      centerY = elArea.top + radius;
+    }
+
+    // Use mouse coordinates to update element position
+    function updateTranslation(e) {
+      maxXDist = innerWidth / 2;
+      maxYDist = innerHeight / 2;
+
+      // Since SVG transform-origin can be finicky, get the bounding box
+      // 	coordinates for the element to calculate its center
+      const elArea = el.getBoundingClientRect();
+      const radius = elArea.width / 2;
+      centerX = elArea.left + radius;
+      centerY = elArea.top + radius;
+      // Calculate the distance from the mouse position to the center.
+      const x = e.clientX - centerX;
+      const y = e.clientY - centerY;
+
+      // Put that number over the max distance
+      const xPercent = x / maxXDist;
+      const yPercent = y / maxYDist;
+
+      // Multiply that by the max translation value and apply it to the element
+      const maxXPercent = xPercent * maxTranslation;
+      const maxYPercent = yPercent * maxTranslation;
+
+      gsap.to(el, {
+        xPercent: maxXPercent,
+        yPercent: maxYPercent,
+        duration: 0.5,
+        overwrite: "auto"
+      });
+    }
+
+    window.addEventListener("resize", resize);
+    resize();
+
+    window.addEventListener("mousemove", updateTranslation);
+  }
+
   //Scroll and other anims
   gsap.to('.playground', {
     scrollTrigger: {
