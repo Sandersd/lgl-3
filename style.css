@@ -81,7 +81,7 @@ section.last-section {
 li.magnet{
   display: inline-block;
   list-style-type: none;
-  margin: 0 20px;
+  margin: 20px;
   &:nth-child(1) button {
     background: lightgrey;
   }
@@ -89,15 +89,15 @@ li.magnet{
 .magnet button {
   position: relative;
   background: rebeccapurple;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
   border:5px solid white;
   color: white;
   font-weight: bold;
   font-size: 50px;
   cursor: pointer;
-  padding: 0;
+  padding: 20px;
 }
 
 .playground{

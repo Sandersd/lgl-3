@@ -172,6 +172,8 @@ window.addEventListener('load', () => {
   const mainContent = document.querySelector('.main-content');
   const logoLoader = document.querySelector('.logo-loader');
   const letterPieces = document.querySelectorAll('.letter-piece');
+  const signUpButton = document.querySelector('.magnet button');
+
   if ('scrollRestoration' in history) {
     history.scrollRestoration = 'manual';
   }
@@ -215,6 +217,8 @@ window.addEventListener('load', () => {
     duration: 1.15,
     ease: "bounce.out"
   });
+  
+  createColorCycleTimeline(signUpButton, 0);
 
   // Create a timeline for each letter piece with its unique color journey
   letterPieces.forEach((piece, index) => {
