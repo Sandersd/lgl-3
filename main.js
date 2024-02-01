@@ -186,11 +186,6 @@ window.addEventListener('load', () => {
       e.preventDefault();
     }, { passive: false });
   }
-  document.addEventListener('touchmove', function(e) {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      e.preventDefault();
-    }
-  }, { passive: false });
   
   gsap.registerPlugin(ScrollTrigger);
 
