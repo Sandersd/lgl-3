@@ -240,10 +240,12 @@ p {
     width: 80%;
   }
   .main-title {
-    font-size: calc(4.7708rem / 1.618); /* Divide by golden ratio */
+    font-size: calc(4.7708rem / 1.618); 
+    line-height: 71px;
   }
   .sub-title {
     font-size: calc(2.9583rem / 1.618);
+    line-height: 45px;
   }
   .what-header {
     font-size: calc(2.2083rem / 1.618);
@@ -253,6 +255,7 @@ p {
   }
   p {
     font-size: calc(1.5rem / 1.618);
+    line-height: 24px;
   }
 }
 
@@ -261,21 +264,6 @@ p {
   .container {
     width: 90%;
   }
-  /* .main-title {
-    font-size: calc(4.7708rem / 1.618 / 1.618); 
-  }
-  .sub-title {
-    font-size: calc(2.9583rem / 1.618 / 1.618);
-  }
-  .what-header {
-    font-size: calc(2.2083rem / 1.618 / 1.618);
-  }
-  .smaller-header {
-    font-size: calc(1.8333rem / 1.618 / 1.618);
-  }
-  p {
-    font-size: calc(1.5rem / 1.618 / 1.618);
-  } */
 }
 
 .box {
