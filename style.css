@@ -234,6 +234,50 @@ p {
   line-height: 41px;
 }
 
+/* Media query for medium screens, e.g., tablets */
+@media (max-width: 768px) {
+  .container {
+    width: 80%;
+  }
+  .main-title {
+    font-size: calc(4.7708rem / 1.618); /* Divide by golden ratio */
+  }
+  .sub-title {
+    font-size: calc(2.9583rem / 1.618);
+  }
+  .what-header {
+    font-size: calc(2.2083rem / 1.618);
+  }
+  .smaller-header {
+    font-size: calc(1.8333rem / 1.618);
+  }
+  p {
+    font-size: calc(1.5rem / 1.618);
+  }
+}
+
+/* Media query for small screens, e.g., mobile devices */
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+  }
+  .main-title {
+    font-size: calc(4.7708rem / 1.618 / 1.618); /* Twice smaller */
+  }
+  .sub-title {
+    font-size: calc(2.9583rem / 1.618 / 1.618);
+  }
+  .what-header {
+    font-size: calc(2.2083rem / 1.618 / 1.618);
+  }
+  .smaller-header {
+    font-size: calc(1.8333rem / 1.618 / 1.618);
+  }
+  p {
+    font-size: calc(1.5rem / 1.618 / 1.618);
+  }
+}
+
 .box {
   --size: 50px;
   --p: 25px;

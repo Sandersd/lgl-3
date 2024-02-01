@@ -202,11 +202,18 @@ window.addEventListener('load', () => {
     onHoverOrTouch(piece, toneFrequency, tl);
   });
 
+
+  //Scroll and other anims
   gsap.to('.playground', {
     scrollTrigger: {
       trigger: '.playground',
-      start: 'top 10%',
-      end: 'bottom center',
+      start: '10% 10%',
+      end: 'bottom 60%',
+      // markers: {
+      //   startColor: "purple",
+      //   endColor: "fuchsia",
+      //   fontSize: "3rem",
+      // },
       scrub: true
     },
     opacity: 0,
@@ -214,6 +221,20 @@ window.addEventListener('load', () => {
     ease: 'none',
     duration: .5
   });
+
+  const rotateTimeline = gsap.timeline({repeat: -1, yoyo: true});
+  rotateTimeline.to('.rotating-element', { rotation: 360, duration: 10, ease: 'linear' });
+
+  // gsap.to('.fade-out-section', {
+  //   scrollTrigger: {
+  //     trigger: '.fade-out-section',
+  //     start: 'top center', // Start when the top of the element hits the center of the viewport
+  //     end: 'bottom top', // End when the bottom of the element leaves the top of the viewport
+  //     toggleActions: 'play none none reverse', // Animation plays on scroll down and reverses on scroll up
+  //   },
+  //   opacity: 0,
+  //   duration: 1,
+  // });
 });
 
 
