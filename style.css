@@ -3,7 +3,6 @@ html, body {
   
   margin: 0;
   height: 100%;
-  /* overflow: hidden; */
   font-family: 'Roboto' !important; 
   color: white;
   font-size: 16px;
@@ -64,6 +63,9 @@ section.last-section {
   left: 50%;
   transform: translateX(-50%);
 }
+.last-section ul {
+  padding: 0;
+}
 .last-section .container {
   position: absolute;
   height: 100vh;
@@ -72,7 +74,7 @@ section.last-section {
 }
 .last-section p {
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -547,10 +549,10 @@ p {
 
 /* CAROUSEL */
 .work-container {
-  width: 680px;
+  width: 100%;
   height: 400px;
   -webkit-font-smoothing: antialiased;
-  margin: 50px auto;
+  margin: 0px auto;
   perspective: 1100px;
   transform-style: preserve-3d;
   margin-bottom: 200px;
