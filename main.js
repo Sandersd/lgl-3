@@ -168,6 +168,13 @@ window.addEventListener('load', () => {
     history.scrollRestoration = 'manual';
   }
   window.scrollTo(0, 0);
+  // Prevent scrolling on canvas touch
+  const canvasContainer = document.getElementById('app');
+  if (canvasContainer) {
+    canvasContainer.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+  }
   
   gsap.registerPlugin(ScrollTrigger);
 
