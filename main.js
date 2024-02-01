@@ -170,8 +170,14 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   // Prevent scrolling on canvas touch
   const canvasContainer = document.getElementById('app');
+  const canvasContainer2 = document.getElementById('app');
   if (canvasContainer) {
     canvasContainer.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    }, { passive: false });
+  }
+  if (canvasContainer2) {
+    canvasContainer2.addEventListener('touchmove', function(e) {
       e.preventDefault();
     }, { passive: false });
   }
