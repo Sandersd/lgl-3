@@ -1,6 +1,8 @@
 import './style.css'
 import { gsap } from 'gsap';
 import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+import { InertiaPlugin } from "gsap/InertiaPlugin";
+import { Draggable } from "gsap/Draggable";
 import { neonCursor } from 'https://unpkg.com/threejs-toys@0.0.8/build/threejs-toys.module.cdn.min.js'
 
 // NEON BOTTOM SECTION
