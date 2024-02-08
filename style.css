@@ -309,6 +309,16 @@ p {
   .container {
     width: 90%;
   }
+  .eye-container {
+    left: -55% !important;
+  }
+  #emoji {
+    right: -160px !important;
+  }
+  .magnet button {
+    width: 150px;
+    height: 150px;
+  }
 }
 
 /* WAVES */
@@ -550,20 +560,20 @@ p {
 /* CAROUSEL */
 .work-container {
   width: 100%;
-  height: 400px;
+  height: 200px;
   -webkit-font-smoothing: antialiased;
   margin: 0px auto;
   perspective: 1100px;
   transform-style: preserve-3d;
   margin-bottom: 200px;
- 
+  overflow-x: clip;
   
 }
 
 .highlight-box {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 600px;
+  height: 388px;
   background-color: #06f;
   display: inline-block;
   margin: 10px 20px 50px 235px; 
@@ -574,8 +584,14 @@ p {
 .work-card{ 
   border: 1px solid #00fff3;
   color: #00FFF2;
-  /* background: transparent; */
-  height: 600px;
+  background: transparent;
+  /* width: 600px; */
+  /* height: 600px; */
+}
+
+.card-img-top {
+  width: 600px;
+  height: 388px;
 }
 
 .work-card:hover{
