@@ -319,6 +319,12 @@ p {
     width: 150px;
     height: 150px;
   }
+  .work-container {
+    overflow-x: clip;
+  }
+  .emoji-container {
+    overflow-x: clip;
+  }
 }
 
 /* WAVES */
@@ -566,7 +572,6 @@ p {
   perspective: 1100px;
   transform-style: preserve-3d;
   margin-bottom: 200px;
-  overflow-x: clip;
   
 }
 
