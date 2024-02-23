@@ -603,3 +603,32 @@ p {
   cursor: pointer;
   box-shadow: 0 4px 8px 0 #00fff3, 0 6px 20px 0 #00fff3;
 }
+
+/* TESTIMONIALS */
+.testimonials-container {
+  background-color: #FF3357; /* Or any other color you prefer */
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.testimonial {
+  display: inline-block;
+  margin-right: 20px; /* Adjust based on your design */
+  position: relative;
+}
+
+.testimonial span {
+  /* Style your testimonial text here */
+}
+.testimonials-set {
+  display: inline-flex; /* Aligns items horizontally */
+}
+
+.testimonial:not(:last-child):after {
+  content: '  •'; /* Unicode character for dot */
+  color: #fff; /* Dot color */
+  position: absolute;
+  right: -10px; /* Adjust based on your spacing */
+  top: 50%;
+  transform: translateY(-50%);
+}
