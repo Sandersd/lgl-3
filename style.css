@@ -632,3 +632,18 @@ p {
   top: 50%;
   transform: translateY(-50%);
 }
+
+.gradient-text {
+  /* Corresponds to "text-transparent" */
+  color: transparent;
+
+  /* Corresponds to "bg-clip-text" */
+  background-clip: text;
+  -webkit-background-clip: text; /* For cross-browser compatibility */
+
+  /* Corresponds to "bg-gradient-to-r from-blue-500 via-pink-500 to-blue-500" */
+  background-image: linear-gradient(to right, #3b82f6, #ec4899, #3b82f6);
+
+  /* Additional styles to ensure the gradient is visible */
+  /* display: block; or "block", depending on use-case */
+}
