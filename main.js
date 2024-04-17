@@ -538,7 +538,7 @@ window.addEventListener('load', () => {
   const btn1 = document.querySelector('li:nth-child(1) button');
   new HoverButton(btn1);
 
-  animateTestimonials();
+  // animateTestimonials();
 });
 
 // GSAP for Testimonials Scrolling
