@@ -113,6 +113,7 @@ const onHoverOrTouch = (element, frequency, timeline) => {
   });
   element.addEventListener('click', () => {
     playTone(getRandomTone());
+    window.scrollTo(0, 0);
     timeline.pause();
     gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // Replace 'hoverColor' with your desired color
   });
@@ -121,6 +122,7 @@ const onHoverOrTouch = (element, frequency, timeline) => {
   });
   element.addEventListener('touchstart', () => {
     playTone(getRandomTone());
+    window.scrollTo(0, 0);
     timeline.pause();
     gsap.to(element, { backgroundColor: getRandomColor(), duration: 0.5 }); // For touch devices
   });
