@@ -170,9 +170,6 @@ const createColorCycleTimeline = (element, delay) => {
 };
 
 window.addEventListener('load', () => {
-  const preloader = document.getElementById('preloader');
-  const mainContent = document.querySelector('.main-content');
-  const logoLoader = document.querySelector('.logo-loader');
   const letterPieces = document.querySelectorAll('.letter-piece');
   const signUpButton = document.querySelector('.magnet button');
 
@@ -195,30 +192,6 @@ window.addEventListener('load', () => {
   }
 
   gsap.registerPlugin(ScrollTrigger, InertiaPlugin, Draggable, MorphSVGPlugin);
-
-  // Create a timeline for preload
-  const tl = gsap.timeline({ 
-    onComplete: () => {
-      preloader.style.width = '0';
-
-      // Reveal the main content
-      gsap.to(mainContent, {
-        visibility: 'visible',
-        opacity: 1,
-        duration: 0.5,
-        ease: 'sine.in'
-      });
-    }
-  });
-
-  // Animate the logoLoader's position
-  tl.to(logoLoader, {
-    top: '0%',
-    left: '0%',
-    transform: 'translate(0, 0)',
-    duration: 1.15,
-    ease: "bounce.out"
-  });
   
   createColorCycleTimeline(signUpButton, 0);
 
@@ -568,7 +541,34 @@ const preload = () => {
   let manager = new THREE.LoadingManager();
   manager.onLoad = function() { 
     const environment = new Environment( typo, particle );
+    const preloader = document.getElementById('preloader');
+    const mainContent = document.querySelector('.main-content');
+    const logoLoader = document.querySelector('.logo-loader');
     document.getElementById('progress-bar-container').style.display = 'none';
+
+    // Create a timeline for preload
+    const tl = gsap.timeline({ 
+      onComplete: () => {
+        preloader.style.width = '0';
+
+        // Reveal the main content
+        gsap.to(mainContent, {
+          visibility: 'visible',
+          opacity: 1,
+          duration: 0.5,
+          ease: 'sine.in'
+        });
+      }
+    });
+
+    // Animate the logoLoader's position
+    tl.to(logoLoader, {
+      top: '0%',
+      left: '0%',
+      transform: 'translate(0, 0)',
+      duration: 1.15,
+      ease: "bounce.out"
+    });
   }
 
   manager.onProgress = function(item, loaded, total) {
