@@ -566,7 +566,13 @@ const preload = () => {
   let manager = new THREE.LoadingManager();
   manager.onLoad = function() { 
     const environment = new Environment( typo, particle );
+    document.getElementById('progress-bar-container').style.display = 'none';
   }
+
+  manager.onProgress = function(item, loaded, total) {
+    const progress = (loaded / total) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+  };
 
   var typo = null;
   const loader = new THREE.FontLoader( manager );
