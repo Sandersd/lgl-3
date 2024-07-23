@@ -542,23 +542,23 @@ window.addEventListener('load', () => {
 });
 
 // GSAP for Testimonials Scrolling
-function animateTestimonials() {
-  const testimonials = gsap.timeline({
-    defaults: { ease: "linear" },
-    repeat: -1,
-  });
+// function animateTestimonials() {
+//   const testimonials = gsap.timeline({
+//     defaults: { ease: "linear" },
+//     repeat: -1,
+//   });
 
-  let totalWidth = document.querySelector('.testimonials').offsetWidth;
+//   let totalWidth = document.querySelector('.testimonials').offsetWidth;
 
-  testimonials.to(".testimonials", {
-    x: () => `-${totalWidth}px`,
-    duration: 60, // Adjust duration based on your preference
-    ease: "none",
-    modifiers: {
-      x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
-    },
-  });
-}
+//   testimonials.to(".testimonials", {
+//     x: () => `-${totalWidth}px`,
+//     duration: 60, // Adjust duration based on your preference
+//     ease: "none",
+//     modifiers: {
+//       x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+//     },
+//   });
+// }
 
 
 const preload = () => {

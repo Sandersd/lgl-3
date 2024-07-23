@@ -604,10 +604,14 @@ p {
   box-shadow: 0 4px 8px 0 #00fff3, 0 6px 20px 0 #00fff3;
 }
 
+.video-reel {
+  margin-top: 60px;
+}
+
 /* TESTIMONIALS */
 .testimonials-container {
   background-color: #FF3357; /* Or any other color you prefer */
-  overflow-x: auto;
+  overflow-x: scroll;
   white-space: nowrap;
 }
 
