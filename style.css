@@ -666,3 +666,102 @@ p {
   /* Additional styles to ensure the gradient is visible */
   /* display: block; or "block", depending on use-case */
 }
+
+/* Footer refresh — isolated to the existing #app section. */
+.last-section .footer-content {
+  box-sizing: border-box;
+  justify-content: space-between;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  padding: clamp(64px, 9vh, 110px) clamp(24px, 6vw, 96px) 34px;
+}
+
+.footer-heading {
+  position: relative;
+  z-index: 2;
+  text-align: left;
+}
+
+.footer-kicker {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.footer-heading h2 {
+  max-width: 760px;
+  margin: 18px 0 0;
+  font-size: clamp(3rem, 7vw, 6.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.06em;
+}
+
+.footer-content > ul {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+}
+
+.footer-content .magnet button {
+  border-width: 2px;
+  background: #fff;
+  color: #080808;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.05em;
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
+}
+
+.footer-bottom {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.last-section .footer-bottom p {
+  position: static;
+  margin: 0;
+  transform: none;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.footer-call {
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.65);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .last-section .footer-content {
+    width: 100%;
+    padding: 58px 20px 28px;
+  }
+
+  .footer-content > ul {
+    top: 55%;
+  }
+
+  .footer-heading h2 {
+    font-size: clamp(2.7rem, 14vw, 4.5rem);
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column-reverse;
+  }
+}
